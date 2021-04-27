@@ -1,3 +1,14 @@
+.titleBar {
+  background-color: #000;
+  display: block;
+  padding-left: 10px;
+}
+
+.searchBar {
+  font-size: 20px;
+  width: 70%;
+}
+
 .App {
   text-align: center;
 }

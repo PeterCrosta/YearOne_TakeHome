@@ -1,23 +1,38 @@
-import logo from './logo.svg';
+import {useState} from 'react'
 import './App.css';
+import logo from './logo.svg'
 
 function App() {
+  const [movies, setMovie] = useState([{id: 0, title: "Harry and the Hendersons", overview: "A movie I haven't seen"}])
+  const rows = []
+  movies.forEach(movie => {
+    rows.push(<div key={movie.id}>
+      <img src="" alt="poster"/>
+      <h3>{movie.title}</h3>
+      <p>{movie.overview}</p>
+    </div>)
+  })
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <table className="titleBar">
+        <tbody>
+          <tr>
+            <td>
+              <img width="50" src={logo} alt="atom"/>
+            </td>
+            <td>
+              <h3 style={{
+                color: "#fff"
+              }}
+              >Movie DB Search
+              </h3>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <input className="searchBar" placeholder="Enter movie name" />
+      {rows}
     </div>
   );
 }
