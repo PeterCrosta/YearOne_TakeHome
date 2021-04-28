@@ -6,12 +6,15 @@ import secrets from './secrets'
 
 function SingleMoviePreview(props) {
   const {id, title, poster, overview} = props.movie
-  const {idx} = props
+  const {idx, setSingleMovieId} = props
 
   return (
     <div key={idx}>
       <img src={`https://image.tmdb.org/t/p/original/${poster}`} width='100' alt="movie poster" className="posterPreview" />
-      <h3 className="titlePreview">{title}</h3>
+      <h3 
+        className="titlePreview"
+        onClick={() => setSingleMovieId(id)}
+      >{title}</h3>
       <p className="overviewPreview">{overview}</p>
     </div>
   )
@@ -19,13 +22,49 @@ function SingleMoviePreview(props) {
 
 function SingleMovie(props) {
   const {movieId} = props
+  const [movieInfo, setMovieInfo] = useState({})
+// https://api.themoviedb.org/3/movie/157336?api_key=16ff66b6a4fe255819100131f3826554&append_to_response=credits
+  useEffect(() => {
+    const getMovieInfo = async () => {
+      const searchStr = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${secrets.apiKey}&append_to_response=credits`
+      const {data} = await axios.get(searchStr)
+      console.log(data)
+      const {title, overview, release_date, poster_path} = data
+      const director = data.credits.crew.find(el => el.job === 'Director')
+      setMovieInfo({
+        id: movieId,
+        title,
+        overview,
+        releaseDate: release_date,
+        poster: poster_path,
+        director: director.name
+      })
+    }
+    getMovieInfo()
+  })
+
+
+  return (
+    <div>
+      {movieInfo.title ? (
+        <div id="singleMovieContainer" >
+          <h1 className="singleMovieTitle">{movieInfo.title}</h1>
+          <h3>{movieInfo.director}</h3>
+        </div>
+  
+      ) : (
+        <h2>Loading...</h2>
+      )}
+
+    </div>
+  )
 }
 
 function App() {
   const [movies, setMovies] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [page, setPage] = useState(1)
-  const [singleMovId, setSingleMovId] = useState(null)
+  const [singleMovieId, setSingleMovieId] = useState(null)
 
 
 
@@ -75,7 +114,6 @@ function App() {
         </tbody>
       </table>
       <form 
-        // onChange={handleChange} 
         className="searchBar"
       >
         <input 
@@ -86,10 +124,17 @@ function App() {
           onChange={(e) => setSearchTerm(e.target.value)}
           />
       </form>
-      {movies.map((movie, idx) => (<SingleMoviePreview
-      movie={movie}
-      idx={idx}
-       />))}
+      {singleMovieId ? (
+        < SingleMovie 
+          movieId={singleMovieId}
+        />
+        ) : (
+        movies.map((movie, idx) => (
+        <SingleMoviePreview
+          movie={movie}
+          idx={idx}
+          setSingleMovieId={setSingleMovieId}
+       />)))}
     </div>
   );
 }
