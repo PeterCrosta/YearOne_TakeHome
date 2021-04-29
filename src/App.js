@@ -6,14 +6,14 @@ import secrets from './secrets'
 
 function SingleMoviePreview(props) {
   const {id, title, poster, overview} = props.movie
-  const {idx, setSingleMovieId} = props
+  const {idx, setSingleMovie, movies} = props
 
   return (
     <div key={idx}>
       <img src={`https://image.tmdb.org/t/p/original/${poster}`} width='100' alt="movie poster" className="posterPreview" />
       <h3 
         className="titlePreview"
-        onClick={() => setSingleMovieId(id)}
+        onClick={() => setSingleMovie(movies[idx])}
       >{title}</h3>
       <p className="overviewPreview">{overview}</p>
     </div>
@@ -21,41 +21,41 @@ function SingleMoviePreview(props) {
 }
 
 function SingleMovie(props) {
-  const {movieId} = props
-  const [movieInfo, setMovieInfo] = useState({})
+  const {movie, setMovieId} = props
+  const [director, setDirector] = useState('')
 // https://api.themoviedb.org/3/movie/157336?api_key=16ff66b6a4fe255819100131f3826554&append_to_response=credits
   useEffect(() => {
-    const getMovieInfo = async () => {
-      const searchStr = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${secrets.apiKey}&append_to_response=credits`
+    const getCredits = async () => {
+      const searchStr = `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${secrets.apiKey}&append_to_response=credits`
       const {data} = await axios.get(searchStr)
       console.log(data)
-      const {title, overview, release_date, poster_path} = data
-      const director = data.credits.crew.find(el => el.job === 'Director')
-      setMovieInfo({
-        id: movieId,
-        title,
-        overview,
-        releaseDate: release_date,
-        poster: poster_path,
-        director: director.name
-      })
+      const director = data.crew.find(el => el.job === 'Director')
+      setDirector(director.name)
     }
-    getMovieInfo()
-  })
+    getCredits()
+  }, [movie])
 
 
   return (
     <div>
-      {movieInfo.title ? (
         <div id="singleMovieContainer" >
-          <h1 className="singleMovieTitle">{movieInfo.title}</h1>
-          <h3>{movieInfo.director}</h3>
-        </div>
-  
-      ) : (
-        <h2>Loading...</h2>
-      )}
+          <button type="button" onClick={() => setMovieId(null)}>X</button>
+          {movie.poster ? (
+            <img 
+              className="singleMoviePoster" 
+              src={`https://image.tmdb.org/t/p/original/${movie.poster}`} 
+              width="75"
+              alt="movie poster"
+            />
 
+          ) : (
+            <div>Icons made by <a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+          )}
+          <h1 className="singleMovieTitle">{movie.title}</h1>
+          <h3>{director ? `Directed by ${director}` : "Director not listed"}</h3>
+          <p className="singleMovieReleaseYear" >{movie.releaseDate ? `Released ${movie.releaseDate}` : 'Release date unknown'}</p>
+          <p className="singleMovieOverview" >{movie.overview}</p>
+        </div>
     </div>
   )
 }
@@ -63,8 +63,7 @@ function SingleMovie(props) {
 function App() {
   const [movies, setMovies] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
-  const [page, setPage] = useState(1)
-  const [singleMovieId, setSingleMovieId] = useState(null)
+  const [singleMovie, setSingleMovie] = useState(null)
 
 
 
@@ -72,7 +71,7 @@ function App() {
 
     const handleChange = async () => {
   
-      const searchStr = `https://api.themoviedb.org/3/search/movie?api_key=${secrets.apiKey}&language=en-US&query=${searchTerm}&page=${page}&include_adult=false`
+      const searchStr = `https://api.themoviedb.org/3/search/movie?api_key=${secrets.apiKey}&language=en-US&query=${searchTerm}&include_adult=false`
   
       const {data} = await axios.get(searchStr)
       const res = data.results.reduce((accumulator, mov) => {
@@ -92,7 +91,7 @@ function App() {
     }
     if (searchTerm.length) handleChange()
     else setMovies([])
-  }, [searchTerm, page])
+  }, [searchTerm])
 
 
   return (
@@ -124,16 +123,18 @@ function App() {
           onChange={(e) => setSearchTerm(e.target.value)}
           />
       </form>
-      {singleMovieId ? (
+      {singleMovie ? (
         < SingleMovie 
-          movieId={singleMovieId}
+          movie={singleMovie}
+          setMovie={setSingleMovie}
         />
         ) : (
         movies.map((movie, idx) => (
         <SingleMoviePreview
           movie={movie}
           idx={idx}
-          setSingleMovieId={setSingleMovieId}
+          setSingleMovie={setSingleMovie}
+          movies={movies}
        />)))}
     </div>
   );
