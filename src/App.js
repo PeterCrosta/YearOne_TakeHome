@@ -3,6 +3,7 @@ import './App.css';
 import logo from './logo.svg'
 import axios from 'axios'
 import secrets from './secrets'
+import {ratings} from './Firebase'
 
 function SingleMoviePreview(props) {
   const {id, title, poster, overview} = props.movie
@@ -21,7 +22,7 @@ function SingleMoviePreview(props) {
 }
 
 function SingleMovie(props) {
-  const {movie, setMovieId} = props
+  const {movie, setMovie} = props
   const [director, setDirector] = useState('')
 // https://api.themoviedb.org/3/movie/157336?api_key=16ff66b6a4fe255819100131f3826554&append_to_response=credits
   useEffect(() => {
@@ -39,7 +40,7 @@ function SingleMovie(props) {
   return (
     <div>
         <div id="singleMovieContainer" >
-          <button type="button" onClick={() => setMovieId(null)}>X</button>
+          <button type="button" onClick={() => setMovie(null)}>X</button>
           {movie.poster ? (
             <img 
               className="singleMoviePoster" 
@@ -68,9 +69,14 @@ function App() {
 
 
   useEffect(() => {
-
+    // console.log(ratings)
+    ratings.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log('id: ', doc.id, 'data: ', doc.data)
+      })
+    })
     const handleChange = async () => {
-  
+      setSingleMovie(null)
       const searchStr = `https://api.themoviedb.org/3/search/movie?api_key=${secrets.apiKey}&language=en-US&query=${searchTerm}&include_adult=false`
   
       const {data} = await axios.get(searchStr)
