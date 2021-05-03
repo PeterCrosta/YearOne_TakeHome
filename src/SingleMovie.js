@@ -61,49 +61,60 @@ function SingleMovie(props) {
     return (
       <div>
           <div id="singleMovieContainer" >
-            <button type="button" onClick={() => setMovie(null)}>X</button>
-            {movie.poster ? (
-              <img 
-                className="singleMoviePoster" 
-                src={`https://image.tmdb.org/t/p/original/${movie.poster}`} 
-                width="75"
-                alt="movie poster"
-              />
-            ) : (
-                <div>Icons made by <a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-          )}
-          <h1 className="singleMovieTitle">{movie.title}</h1>
-          <h3>{director.length ? `Directed by ${director}` : "Director not listed"}</h3>
-          <p className="singleMovieReleaseYear" >{movie.releaseDate ? `Released ${movie.releaseDate}` : 'Release date unknown'}</p>
-          <div className="ratingsContainer" >
-            <div className="likesContainer">
-              <button 
-                type="button" 
-                onClick={() => setLikes(likes-1)}
-                disabled={!loaded}
-              >-</button>
-              <span>likes: {likes}</span>
-              <button 
-                type="button" 
-                onClick={() => setLikes(likes+1)}
-                disabled={!loaded}
-              >+</button>
-            </div>
-            <div className="dislikesContainer" >
-              <button 
-                type="button" 
-                onClick={() => setDislikes(dislikes-1)}
-                disabled={!loaded}
-              >-</button>
-              <span>dislikes: {dislikes}</span>
-              <button 
-                type="button" 
-                onClick={() => setDislikes(dislikes+1)}
-                disabled={!loaded}
-              >+</button>
-            </div>
-          </div>
-          <p className="singleMovieOverview" >{movie.overview}</p>
+            <button 
+              type="button" 
+              onClick={() => setMovie(null)}
+              className="exitSingleMovieButton"
+              >X</button>
+            <img 
+              className="singleMoviePoster" 
+              src={movie.poster ? `https://image.tmdb.org/t/p/original/${movie.poster}` : "https://image.shutterstock.com/image-vector/no-image-available-vector-illustration-260nw-744886198.jpg"} 
+              alt="movie poster"
+            />   
+            <div id="singleMovieContentContainer" >
+              <h1 className="singleMovieTitle">{movie.title}</h1>
+              <h3>{director.length ? `Directed by ${director}` : "Director not listed"}</h3>
+              <p 
+                className="singleMovieReleaseYear" >
+                  {movie.releaseDate ? 
+                    `Released ${movie.releaseDate}` : 
+                    'Release date unknown'}
+              </p>
+              <div className="ratingsContainer" >
+                <div className="feedbackContainer">
+                  <button 
+                    type="button" 
+                    onClick={() => setLikes(likes-1)}
+                    disabled={!loaded}
+                    className="ratingsButton"
+                  >-</button>
+                  <span className="ratingsSpan">likes: {likes}</span>
+                  <button 
+                    type="button" 
+                    onClick={() => setLikes(likes+1)}
+                    disabled={!loaded}
+                    className="ratingsButton"
+                  >+</button>
+                </div>
+                <div className="feedbackContainer" >
+                  <button 
+                    type="button" 
+                    onClick={() => setDislikes(dislikes-1)}
+                    disabled={!loaded}
+                    className="ratingsButton"
+                  >-</button>
+                  <span className="ratingsSpan">dislikes: {dislikes}</span>
+                  <button 
+                    type="button" 
+                    onClick={() => setDislikes(dislikes+1)}
+                    disabled={!loaded}
+                    className="ratingsButton"
+                  >+</button>
+                </div>
+              </div>
+              <p className="singleMovieOverview" >{movie.overview}</p>
+              
+              </div>  
         </div>
     </div>
   )

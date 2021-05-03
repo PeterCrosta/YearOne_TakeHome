@@ -59,11 +59,11 @@ function App() {
         </tbody>
       </table>
       <form 
-        className="searchBar"
+        className="searchBarForm"
       >
         <input 
           type="text"
-          className="searchBar" 
+          className="searchBarInput" 
           placeholder="Enter movie name" 
           value={searchTerm} 
           onChange={(e) => setSearchTerm(e.target.value)}

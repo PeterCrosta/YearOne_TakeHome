@@ -4,9 +4,70 @@
   padding-left: 10px;
 }
 
-.searchBar {
+.searchBarInput {
   font-size: 20px;
   width: 70%;
+  display: block;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+.singleMoviePreviewContainer {
+  display: flex;
+  margin: 5px 5px 5px 5px;
+  border: solid;
+  padding: 2px 2px 2px 2px;
+}
+
+.titleAboutConatiner {
+  margin: 5px 5px 5px 5px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.overviewPreview {
+  text-align: center;
+}
+
+#singleMovieContainer {
+  margin-top: 3%;
+  padding: 2% 2% 2% 2%;
+  border: solid;
+  margin-left: 3%;
+  margin-right: 3%;
+  margin-bottom: 3%;
+  display: flex;
+}
+.singleMoviePoster {
+  height: 20rem;
+  margin: 2% 2% 2% 2%;
+}
+
+.exitSingleMovieButton {
+  display: block;
+  width: 25px;
+  height: 21px;
+}
+
+.ratingsContainer {
+  display: flex;
+  justify-content: space-evenly;
+  
+}
+
+.feedbackContainer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.ratingsSpan {
+  margin: 0px 3px 0px 3px;
+}
+
+.ratingsButton {
+  height: 21px;
+  width: 23px;
 }
 
 .App {
