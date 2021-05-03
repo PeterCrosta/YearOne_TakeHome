@@ -24,17 +24,43 @@ function SingleMoviePreview(props) {
 function SingleMovie(props) {
   const {movie, setMovie} = props
   const [director, setDirector] = useState('')
+  const [likes, setLikes] = useState(0)
+  const [dislikes, setDislikes] = useState(0)
 // https://api.themoviedb.org/3/movie/157336?api_key=16ff66b6a4fe255819100131f3826554&append_to_response=credits
   useEffect(() => {
     const getCredits = async () => {
       const searchStr = `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${secrets.apiKey}&append_to_response=credits`
       const {data} = await axios.get(searchStr)
-      console.log(data)
+      // console.log(data)
       const director = data.crew.find(el => el.job === 'Director')
       setDirector(director.name)
     }
     getCredits()
   }, [movie])
+
+  useEffect(() => {
+    const getRatings = () => {
+      const movieDoc =ratings.doc(`${movie.id}`)
+      movieDoc.get().then(doc => {
+        if (doc.exists) {
+          console.log('data: ', doc.data())
+          setLikes(doc.data().likes)
+          setDislikes(doc.data().dislikes)
+        } else {
+          console.log('no data found')
+          ratings.doc(`${movie.id}`)
+          .set({
+            likes: 0,
+            dislikes: 0
+          })
+          .then(() => console.log('new movie created'))
+        }
+      }).catch(error => {
+        console.log('there was an aerror')
+      })
+    }
+    getRatings()
+  })
 
 
   return (
@@ -70,11 +96,12 @@ function App() {
 
   useEffect(() => {
     // console.log(ratings)
-    ratings.get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log('id: ', doc.id, 'data: ', doc.data)
-      })
-    })
+    // ratings.get().then((querySnapshot) => {
+    //   querySnapshot.forEach((doc) => {
+    //     console.log(doc)
+    //     // console.log('id: ', doc.id, 'data: ', doc.data)
+    //   })
+    // })
     const handleChange = async () => {
       setSingleMovie(null)
       const searchStr = `https://api.themoviedb.org/3/search/movie?api_key=${secrets.apiKey}&language=en-US&query=${searchTerm}&include_adult=false`
