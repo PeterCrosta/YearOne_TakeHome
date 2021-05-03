@@ -1,5 +1,5 @@
 function SingleMoviePreview(props) {
-    const {id, title, poster, overview} = props.movie
+    const {title, poster, overview} = props.movie
     const {idx, setSingleMovie, movies} = props
     return (
       <div 
