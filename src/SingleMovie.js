@@ -8,6 +8,8 @@ function SingleMovie(props) {
     const [director, setDirector] = useState('')
     const [likes, setLikes] = useState(0)
     const [dislikes, setDislikes] = useState(0)
+    const [loaded, setLoaded] = useState(false)
+
     useEffect(() => {
       const getCredits = async () => {
         const searchStr = `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${secrets.apiKey}&append_to_response=credits`
@@ -23,24 +25,25 @@ function SingleMovie(props) {
         const movieDoc = ratings.doc(`${movie.id}`)
         movieDoc.get().then(doc => {
           if (doc.exists) {
-            console.log('data: ', doc.data())
             setLikes(doc.data().likes)
             setDislikes(doc.data().dislikes)
+            setLoaded(true)
           } else {
-            console.log('no data found')
             ratings.doc(`${movie.id}`)
             .set({
               likes: 0,
               dislikes: 0
             })
-            .then(() => console.log('new movie created'))
+            .then(() => {
+              console.log('new movie created')
+            })
           }
         }).catch(error => {
-          console.log('there was an aerror')
+          console.log('error: ', error)
         })
       }
       getRatings()
-    }, [movie])
+    }, [movie.id])
 
     useEffect(() => {
       const updateRatings = () => {
@@ -50,8 +53,8 @@ function SingleMovie(props) {
           dislikes: dislikes
         })
       }
-      updateRatings()
-    }, [likes, dislikes, movie])
+      if (loaded) updateRatings()
+    }, [likes, dislikes, movie.id, loaded])
   
   
     return (
