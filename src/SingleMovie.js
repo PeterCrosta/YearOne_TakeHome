@@ -36,6 +36,7 @@ function SingleMovie(props) {
             })
             .then(() => {
               console.log('new movie created')
+              setLoaded(true)
             })
           }
         }).catch(error => {
