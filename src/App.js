@@ -26,12 +26,10 @@ function SingleMovie(props) {
   const [director, setDirector] = useState('')
   const [likes, setLikes] = useState(0)
   const [dislikes, setDislikes] = useState(0)
-// https://api.themoviedb.org/3/movie/157336?api_key=16ff66b6a4fe255819100131f3826554&append_to_response=credits
   useEffect(() => {
     const getCredits = async () => {
       const searchStr = `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${secrets.apiKey}&append_to_response=credits`
       const {data} = await axios.get(searchStr)
-      // console.log(data)
       const director = data.crew.find(el => el.job === 'Director')
       setDirector(director.name)
     }
@@ -40,7 +38,7 @@ function SingleMovie(props) {
 
   useEffect(() => {
     const getRatings = () => {
-      const movieDoc =ratings.doc(`${movie.id}`)
+      const movieDoc = ratings.doc(`${movie.id}`)
       movieDoc.get().then(doc => {
         if (doc.exists) {
           console.log('data: ', doc.data())
@@ -60,7 +58,18 @@ function SingleMovie(props) {
       })
     }
     getRatings()
-  })
+  }, [movie])
+
+  useEffect(() => {
+    const updateRatings = () => {
+      const movieDoc = ratings.doc(`${movie.id}`)
+      movieDoc.update({
+        likes: likes,
+        dislikes: dislikes
+      })
+    }
+    updateRatings()
+  }, [likes, dislikes, movie])
 
 
   return (
@@ -81,6 +90,18 @@ function SingleMovie(props) {
           <h1 className="singleMovieTitle">{movie.title}</h1>
           <h3>{director ? `Directed by ${director}` : "Director not listed"}</h3>
           <p className="singleMovieReleaseYear" >{movie.releaseDate ? `Released ${movie.releaseDate}` : 'Release date unknown'}</p>
+          <div className="ratingsContainer" >
+            <div className="likesContainer">
+              <button type="button" onClick={() => setLikes(likes-1)}>-</button>
+              <span>likes: {likes}</span>
+              <button type="button" onClick={() => setLikes(likes+1)}>+</button>
+            </div>
+            <div className="dislikesContainer" >
+              <button type="button" onClick={() => setDislikes(dislikes-1)}>-</button>
+              <span>dislikes: {dislikes}</span>
+              <button type="button" onClick={() => setDislikes(dislikes+1)}>+</button>
+            </div>
+          </div>
           <p className="singleMovieOverview" >{movie.overview}</p>
         </div>
     </div>
@@ -95,13 +116,6 @@ function App() {
 
 
   useEffect(() => {
-    // console.log(ratings)
-    // ratings.get().then((querySnapshot) => {
-    //   querySnapshot.forEach((doc) => {
-    //     console.log(doc)
-    //     // console.log('id: ', doc.id, 'data: ', doc.data)
-    //   })
-    // })
     const handleChange = async () => {
       setSingleMovie(null)
       const searchStr = `https://api.themoviedb.org/3/search/movie?api_key=${secrets.apiKey}&language=en-US&query=${searchTerm}&include_adult=false`
