@@ -15,7 +15,7 @@ function SingleMovie(props) {
         const searchStr = `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${secrets.apiKey}&append_to_response=credits`
         const {data} = await axios.get(searchStr)
         const director = data.crew.find(el => el.job === 'Director')
-        setDirector(director.name)
+        if (director) setDirector(director.name)
       }
       getCredits()
     }, [movie])
@@ -73,18 +73,34 @@ function SingleMovie(props) {
                 <div>Icons made by <a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
           )}
           <h1 className="singleMovieTitle">{movie.title}</h1>
-          <h3>{director ? `Directed by ${director}` : "Director not listed"}</h3>
+          <h3>{director.length ? `Directed by ${director}` : "Director not listed"}</h3>
           <p className="singleMovieReleaseYear" >{movie.releaseDate ? `Released ${movie.releaseDate}` : 'Release date unknown'}</p>
           <div className="ratingsContainer" >
             <div className="likesContainer">
-              <button type="button" onClick={() => setLikes(likes-1)}>-</button>
+              <button 
+                type="button" 
+                onClick={() => setLikes(likes-1)}
+                disabled={!loaded}
+              >-</button>
               <span>likes: {likes}</span>
-              <button type="button" onClick={() => setLikes(likes+1)}>+</button>
+              <button 
+                type="button" 
+                onClick={() => setLikes(likes+1)}
+                disabled={!loaded}
+              >+</button>
             </div>
             <div className="dislikesContainer" >
-              <button type="button" onClick={() => setDislikes(dislikes-1)}>-</button>
+              <button 
+                type="button" 
+                onClick={() => setDislikes(dislikes-1)}
+                disabled={!loaded}
+              >-</button>
               <span>dislikes: {dislikes}</span>
-              <button type="button" onClick={() => setDislikes(dislikes+1)}>+</button>
+              <button 
+                type="button" 
+                onClick={() => setDislikes(dislikes+1)}
+                disabled={!loaded}
+              >+</button>
             </div>
           </div>
           <p className="singleMovieOverview" >{movie.overview}</p>
