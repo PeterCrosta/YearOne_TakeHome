@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/YearOne_TakeHome/static/css/main.3f59fab6.chunk.css",
-    "main.js": "/YearOne_TakeHome/static/js/main.0c73cfe9.chunk.js",
-    "main.js.map": "/YearOne_TakeHome/static/js/main.0c73cfe9.chunk.js.map",
+    "main.js": "/YearOne_TakeHome/static/js/main.bd210405.chunk.js",
+    "main.js.map": "/YearOne_TakeHome/static/js/main.bd210405.chunk.js.map",
     "runtime-main.js": "/YearOne_TakeHome/static/js/runtime-main.0a85b253.js",
     "runtime-main.js.map": "/YearOne_TakeHome/static/js/runtime-main.0a85b253.js.map",
     "static/js/2.a85b754e.chunk.js": "/YearOne_TakeHome/static/js/2.a85b754e.chunk.js",
@@ -12,12 +12,12 @@
     "index.html": "/YearOne_TakeHome/index.html",
     "static/css/main.3f59fab6.chunk.css.map": "/YearOne_TakeHome/static/css/main.3f59fab6.chunk.css.map",
     "static/js/2.a85b754e.chunk.js.LICENSE.txt": "/YearOne_TakeHome/static/js/2.a85b754e.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/YearOne_TakeHome/static/media/logo.6ce24c58.svg"
+    "static/media/film.966fd9bd.png": "/YearOne_TakeHome/static/media/film.966fd9bd.png"
   },
   "entrypoints": [
     "static/js/runtime-main.0a85b253.js",
     "static/js/2.a85b754e.chunk.js",
     "static/css/main.3f59fab6.chunk.css",
-    "static/js/main.0c73cfe9.chunk.js"
+    "static/js/main.bd210405.chunk.js"
   ]
 }
