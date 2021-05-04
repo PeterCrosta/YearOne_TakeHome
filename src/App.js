@@ -8,6 +8,7 @@ import film from './film.png'
 
 
 function App() {
+  // Variables for the movies returned by our search, the search term, and the profile for the single movie to view
   const [movies, setMovies] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [singleMovie, setSingleMovie] = useState(null)
@@ -18,11 +19,9 @@ function App() {
     const handleChange = async () => {
       setSingleMovie(null)
       const searchStr = `https://api.themoviedb.org/3/search/movie?api_key=${secrets.apiKey}&language=en-US&query=${searchTerm}&include_adult=false`
-  
-      const {data} = await axios.get(searchStr)
+      const {data} = await axios.get(searchStr) 
       const res = data.results.reduce((accumulator, mov) => {
-        // console.log(mov)
-        if (mov.original_language === 'en') {
+        if (mov.original_language === 'en') { // only saves needed information
           accumulator.push({
             id: mov.id,
             title: mov.title,
@@ -34,11 +33,11 @@ function App() {
       }
         return accumulator
       }, [])
-      res.sort((a,b) => b.popularity - a.popularity)
+      res.sort((a,b) => b.popularity - a.popularity) // sorts by most popular
       setMovies(res)
     }
     if (searchTerm.length) handleChange()
-    else setMovies([])
+    else setMovies([]) // Resets to empty when no search term present
   }, [searchTerm])
 
 
@@ -72,7 +71,7 @@ function App() {
           className="searchBarInput" 
           placeholder="Enter movie name" 
           value={searchTerm} 
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => setSearchTerm(e.target.value)} // Handled with useEffect
           />
       </form>
       {singleMovie ? (

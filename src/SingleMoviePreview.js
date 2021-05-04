@@ -5,7 +5,7 @@ function SingleMoviePreview(props) {
       <div 
         key={idx} 
         className="singleMoviePreviewContainer" 
-        onClick={() => setSingleMovie(movies[idx])}
+        onClick={() => setSingleMovie(movies[idx])} // Loads the SingleMovie component
       >
         <img 
           src={poster ? `https://image.tmdb.org/t/p/original/${poster}` : "https://image.shutterstock.com/image-vector/no-image-available-vector-illustration-260nw-744886198.jpg"} 

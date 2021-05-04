@@ -8,7 +8,7 @@ State managed entirely with hooks
 Data persists with a Firestore database
 
 Applications walkthrough:
-
+https://vimeo.com/545249676/90ff6b81d4
 
 
 
