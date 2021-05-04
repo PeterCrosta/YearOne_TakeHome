@@ -84,11 +84,13 @@ function SingleMovie(props) {
                 <div className="feedbackContainer">
                   <button 
                     type="button" 
-                    onClick={() => setLikes(likes-1)}
+                    onClick={() => {
+                      if (likes > 0) setLikes(likes-1)
+                    }}
                     disabled={!loaded}
                     className="ratingsButton"
                   >-</button>
-                  <span className="ratingsSpan">likes: {likes}</span>
+                  <span className="ratingsSpan">👍 {likes}</span>
                   <button 
                     type="button" 
                     onClick={() => setLikes(likes+1)}
@@ -99,11 +101,13 @@ function SingleMovie(props) {
                 <div className="feedbackContainer" >
                   <button 
                     type="button" 
-                    onClick={() => setDislikes(dislikes-1)}
+                    onClick={() => {
+                      if (dislikes > 0) setDislikes(dislikes-1)
+                    }}
                     disabled={!loaded}
                     className="ratingsButton"
                   >-</button>
-                  <span className="ratingsSpan">dislikes: {dislikes}</span>
+                  <span className="ratingsSpan">👎 {dislikes}</span>
                   <button 
                     type="button" 
                     onClick={() => setDislikes(dislikes+1)}

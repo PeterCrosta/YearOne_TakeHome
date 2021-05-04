@@ -1,10 +1,10 @@
 import {useState, useEffect} from 'react'
 import './App.css';
-import logo from './logo.svg'
 import axios from 'axios'
 import secrets from './secrets'
 import SingleMoviePreview from './SingleMoviePreview'
 import SingleMovie from './SingleMovie'
+import film from './film.png'
 
 
 function App() {
@@ -46,11 +46,11 @@ function App() {
         <tbody>
           <tr>
             <td>
-              <img width="50" src={logo} alt="atom"/>
+              <img width="50" src={film} alt="atom"/>
             </td>
             <td>
               <h3 style={{
-                color: "#fff"
+                color: "#FFDC66"
               }}
               >Movie DB Search
               </h3>
@@ -59,7 +59,7 @@ function App() {
         </tbody>
       </table>
       <form 
-        className="searchBarForm"
+        className="searchBar"
       >
         <input 
           type="text"

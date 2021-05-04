@@ -71,3 +71,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 
 Cat movie reel icon made by Pixel perfect from www.flaticon.com
+
+Thumbs up by https://www.freepik.com
+
+movie reel icon by fjstudio, https://www.flaticon.com/authors/fjstudio
