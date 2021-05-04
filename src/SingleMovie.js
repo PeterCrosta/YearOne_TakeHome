@@ -47,8 +47,8 @@ function SingleMovie(props) {
     }, [movie.id])
 
     useEffect(() => {
+      const movieDoc = ratings.doc(`${movie.id}`)
       const updateRatings = () => {
-        const movieDoc = ratings.doc(`${movie.id}`)
         movieDoc.update({
           likes: likes,
           dislikes: dislikes

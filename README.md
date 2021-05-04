@@ -1,3 +1,17 @@
+YearOne Take Home Technical
+
+Deployed here:
+https://petercrosta.github.io/YearOne_TakeHome/
+
+Bootstrapped with Create React App
+State managed entirely with hooks
+Data persists with a Firestore database
+
+Applications walkthrough:
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
