@@ -21,13 +21,15 @@ function App() {
   
       const {data} = await axios.get(searchStr)
       const res = data.results.reduce((accumulator, mov) => {
+        // console.log(mov)
         if (mov.original_language === 'en') {
           accumulator.push({
             id: mov.id,
             title: mov.title,
             poster: mov.poster_path,
             overview: mov.overview,
-            popularity: mov.popularity
+            popularity: mov.popularity,
+            releaseDate: mov.release_date ? mov.release_date.slice(0,4) : null
         })
       }
         return accumulator

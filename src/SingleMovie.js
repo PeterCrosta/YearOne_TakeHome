@@ -10,6 +10,8 @@ function SingleMovie(props) {
     const [dislikes, setDislikes] = useState(0)
     const [loaded, setLoaded] = useState(false)
 
+    console.log('movie: ',movie)
+
     useEffect(() => {
       const getCredits = async () => {
         const searchStr = `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${secrets.apiKey}&append_to_response=credits`
