@@ -1,6 +1,22 @@
-.titleBar {
+#titleBar {
   background-color: #000;
   display: block;
+  padding-left: 10px;
+}
+
+#titleBarContents {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#titleLogo {
+  display: flex;
+  flex-direction: row;
+}
+
+#titleText {
+  color: #FFDC66;
   padding-left: 10px;
 }
 
@@ -68,6 +84,19 @@
 .ratingsButton {
   height: 21px;
   width: 23px;
+}
+
+.githubIcon {
+  height: 50px;
+  /* margin-left: 100%; */
+  /* width: 100%; */
+}
+
+#githubIconContainer {
+  width: 70%;
+  padding-bottom: 0;
+  padding-top: 0px;
+  text-align: right;
 }
 
 .App {

@@ -42,22 +42,26 @@ function App() {
 
   return (
     <div className="App">
-      <table className="titleBar">
-        <tbody>
-          <tr>
-            <td>
-              <img width="50" src={film} alt="atom"/>
-            </td>
-            <td>
-              <h3 style={{
-                color: "#FFDC66"
-              }}
-              >Movie DB Search
-              </h3>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div id='titleBar'>
+        <div id='titleBarContents'>
+          <div id='titleLogo'>
+            <img width="50" src={film} alt="atom"/>
+            <h3 id="titleText">Movie DB Search</h3>
+
+          </div>
+        <a 
+          href="https://github.com/PeterCrosta/YearOne_TakeHome" 
+          target='_blank' 
+          rel='noopener noreferrer'
+        >
+          <img 
+            src='https://www.sferalabs.cc/wp-content/uploads/github-logo-white.png' 
+            alt='github logo' 
+            className="githubIcon"
+            />
+        </a>
+        </div>
+      </div>
       <form 
         className="searchBar"
       >
