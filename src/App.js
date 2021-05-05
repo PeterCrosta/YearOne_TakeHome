@@ -19,22 +19,27 @@ function App() {
     const handleChange = async () => {
       setSingleMovie(null)
       const searchStr = `https://api.themoviedb.org/3/search/movie?api_key=${secrets.apiKey}&language=en-US&query=${searchTerm}&include_adult=false`
-      const {data} = await axios.get(searchStr) 
-      const res = data.results.reduce((accumulator, mov) => {
-        if (mov.original_language === 'en') { // only saves needed information
-          accumulator.push({
-            id: mov.id,
-            title: mov.title,
-            poster: mov.poster_path,
-            overview: mov.overview,
-            popularity: mov.popularity,
-            releaseDate: mov.release_date ? mov.release_date.slice(0,4) : null
-        })
+      try {
+        const {data} = await axios.get(searchStr) 
+        const res = data.results.reduce((accumulator, mov) => {
+          if (mov.original_language === 'en') { // only saves needed information
+            accumulator.push({
+              id: mov.id,
+              title: mov.title,
+              poster: mov.poster_path,
+              overview: mov.overview,
+              popularity: mov.popularity,
+              releaseDate: mov.release_date ? mov.release_date.slice(0,4) : null
+          })
+        }
+          return accumulator
+        }, [])
+        res.sort((a,b) => b.popularity - a.popularity) // sorts by most popular
+        setMovies(res)
+
+      } catch (error) {
+        console.log('Error: ', error)
       }
-        return accumulator
-      }, [])
-      res.sort((a,b) => b.popularity - a.popularity) // sorts by most popular
-      setMovies(res)
     }
     if (searchTerm.length) handleChange()
     else setMovies([]) // Resets to empty when no search term present

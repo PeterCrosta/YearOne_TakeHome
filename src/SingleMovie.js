@@ -14,9 +14,13 @@ function SingleMovie(props) {
     useEffect(() => {
       const getCredits = async () => { // Only makes search for director in single view
         const searchStr = `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${secrets.apiKey}&append_to_response=credits`
-        const {data} = await axios.get(searchStr)
-        const director = data.crew.find(el => el.job === 'Director')
-        if (director) setDirector(director.name)
+        try {
+          const {data} = await axios.get(searchStr)
+          const director = data.crew.find(el => el.job === 'Director')
+          if (director) setDirector(director.name)
+        } catch (error) {
+          console.log('Error: ', error)
+        }
       }
       getCredits()
     }, [movie])
