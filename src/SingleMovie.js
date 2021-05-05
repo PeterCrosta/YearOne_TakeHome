@@ -45,7 +45,7 @@ function SingleMovie(props) {
             })
           }
         }).catch(error => {
-          console.log('error: ', error)
+          console.log('Error: ', error)
         })
       }
       getRatings()
@@ -57,6 +57,8 @@ function SingleMovie(props) {
         movieDoc.update({
           likes: likes,
           dislikes: dislikes
+        }).catch(error => {
+          console.log('Error: ', error)
         })
       }
       if (loaded) updateRatings()
